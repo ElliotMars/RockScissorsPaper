@@ -1,5 +1,5 @@
 from dataloader import load_images_from_folder
-from imageprocess import binarize_images, extract_contours, calculate_features
+from imageprocess import Pre_process, feature_extraction
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
@@ -9,9 +9,8 @@ from sklearn.metrics import accuracy_score, classification_report
 images, labels = load_images_from_folder('dataset/data')
 
 #特征提取
-binarized_images = binarize_images(images)
-contours_list = extract_contours(binarized_images)
-features = calculate_features(contours_list)
+results = Pre_process(images)
+features = feature_extraction(results)
 
 #训练
 X = features
