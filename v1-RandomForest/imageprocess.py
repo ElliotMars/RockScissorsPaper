@@ -1,42 +1,5 @@
 import cv2
-
-def binarize_images(images):
-    binarized_images = []
-    for img in images:
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        _, binary = cv2.threshold(gray, 128, 255, cv2.THRESH_BINARY)
-        binarized_images.append(binary)
-    return binarized_images
-
-def extract_contours(binarized_images):
-    contours_list = []
-    for binary in binarized_images:
-        contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        contours_list.append(contours[0])  # 假设只有一个主要轮廓
-    return contours_list
-
-
-def calculate_features(contours_list):
-    features = []
-    for contour in contours_list:
-        x, y, w, h = cv2.boundingRect(contour)
-        aspect_ratio = float(w) / h
-        area = cv2.contourArea(contour)
-        hull = cv2.convexHull(contour)
-        hull_area = cv2.contourArea(hull)
-
-        # 处理 hull_area 为零的情况
-        if hull_area == 0:
-            solidity = 0  # 或者使用其他合适的默认值
-        else:
-            solidity = float(area) / hull_area
-
-        rect_area = w * h
-        extent = float(area) / rect_area
-        perimeter = cv2.arcLength(contour, True)
-        feature = [aspect_ratio, area, solidity, extent, perimeter]
-        features.append(feature)
-    return features
+import numpy as np
 
 def Pre_process(imgs):
     results = []
@@ -100,7 +63,7 @@ def feature_extraction(results):
                     posi.append(i)
                 if Processed_img[11 * Processed_img.shape[0] // 16][i].all() == 0:
                     width[count - 1] += 1
-        feature = [area, posi, width, count]
+        feature = [area, np.sum(width), count]
         features.append(feature)
 
     return features
