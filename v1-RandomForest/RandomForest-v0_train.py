@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
 #加载数据
-images, labels = load_images_from_folder('dataset/data')
+images, labels = load_images_from_folder('../dataset/data')
 
 #特征提取
 results = Pre_process(images)
