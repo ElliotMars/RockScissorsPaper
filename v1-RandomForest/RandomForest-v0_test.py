@@ -25,7 +25,7 @@ def predict_image(image_path):
         return "Image not found"
 
 # 示例
-new_image_path = '../myhandtest/Scissors2.png'  # 修改为你的新图像路径
+new_image_path = '../myhandtest/Rock3.png'  # 修改为你的新图像路径
 prediction = predict_image(new_image_path)
 class_result = category[prediction]
 print(f"Prediction for the new image: {class_result}")
